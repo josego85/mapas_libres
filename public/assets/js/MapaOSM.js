@@ -142,6 +142,4 @@ function cargarMapa()
             p_layer.bindPopup(v_popupString);
         }
 	}
-
-
 }
