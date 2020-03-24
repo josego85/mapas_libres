@@ -1,2 +1,6 @@
 # mapas_libres
-Live de la creacion de mapas con herramientas libres como Leaflet, datos OSM, etc.
+El codigo esta basado en lo que sale del live de Twitch. Consiste en mostrar con herramientas libres que se puede realizar un mapa simple.
+
+Desarrollo:
+- Librería de mapas: Leaflet (https://leafletjs.com/)
+- Lenguajes de programaciósn: HTML, CSS y JavaScript
