@@ -6,9 +6,23 @@ function cargarMapa()
 	var longitud = -57.6309129;
 	var latitud = -25.2961407;
 	var zoom = 12;
+	var minZoom = 6;
+	var maxZoom = 18;
 
-    // Se instancia el objeto mapa.
-	mapa =  L.map('mapa').setView([latitud, longitud], zoom);
+	// Se instancia el objeto mapa.
+	mapa = new L.map('mapa',
+    {
+        center: [latitud, longitud],
+        minZoom: minZoom,
+		maxZoom: maxZoom,
+		zoom: zoom,
+        scrollWheelZoom: false,
+        fullscreenControl: true,
+        fullscreenControlOptions:
+        {
+            position: 'topleft'
+        }
+    });
 
 	// Humanitarian Style.
 	var url = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
