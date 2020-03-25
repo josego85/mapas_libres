@@ -11,3 +11,7 @@ Todo list:
 - Buscador utilizando Nominatim de OSM.
 - Conactarse a una base de datos PostgreSQL/PostGIS, cargando y recuperando datos.
 - Agregar API pata el manejo de la carga y recuperacion de datos.
+
+Links útiles:
+* Instalando PostgreSQL/PostGIS en Windows 10 (https://www.youtube.com/watch?v=vAlDHXyCOxU)
+* PostGIS 3.0 en Ubuntu Bionic Beaver 18.04 LTS (https://proyectosbeta.net/2019/11/postgis-3-0-en-ubuntu-bionic-beaver-18-04-lts/)
