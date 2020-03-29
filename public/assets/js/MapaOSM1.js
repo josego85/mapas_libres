@@ -1,5 +1,5 @@
 var mapa = null;
-var geojsonLayer = null;
+var geoJsonLayer = null;
 var info = null;
 
 function cargarMapa()
@@ -8,25 +8,18 @@ function cargarMapa()
 	var longitud = -57.6309129;
 	var latitud = -23.2961407;
 	var zoom = 6;
-	var minZoom = 6;
-	var maxZoom = 18;
 
-	// Se instancia el objeto mapa.
 	mapa = new L.map('mapa',
-    {
-        center: [latitud, longitud],
-        minZoom: minZoom,
-		maxZoom: maxZoom,
+	{
+		center: [latitud, longitud],
 		zoom: zoom,
-        scrollWheelZoom: false,
-        fullscreenControl: true,
-        fullscreenControlOptions:
-        {
-            position: 'topleft'
-        }
-    });
+		fullscreenControl: true,
+		fullscreenControlOptions:
+		{
+			position: 'topleft'
+		}
+	});
 
-	// Humanitarian Style.
 	var url = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 	var layerOSM = L.tileLayer(url,
 	{
@@ -37,60 +30,39 @@ function cargarMapa()
 
 	$.getJSON("assets/data/Departamentos.geojson", function(data)
 	{
-		geojsonLayer = L.geoJson(data,
+		geoJsonLayer = L.geoJson(data,
 		{
 			style: style,
 			onEachFeature: onEachFeature,
-			filter: function(p_feature, p_layer)
-			{
-				var area = p_feature.properties.Area;
-				var minArea = 50000000000;
-				var maxArea = 90000000000;
+			// filter: function (p_feature, p_layer)
+			// {
+			// 	var area = p_feature.properties.Area;
+			// 	var minArea = 50000000000;
+			// 	var maxArea = 90000000000;
 
-				return (parseInt(area) > minArea && parseInt(area) < maxArea);
-			}
+			// 	return (parseInt(area) > minArea && parseInt(area) < maxArea);
+			// }
 		});
-		mapa.addLayer(geojsonLayer);
+		mapa.addLayer(geoJsonLayer);
 
-		var baseMaps =
+		var baseMaps = 
 		{
 			"OSM": layerOSM
 		};
-		
-		var overlayMaps =
+
+		var overlayMaps = 
 		{
-			'Departamentos': geojsonLayer,
+			'Departamentos': geoJsonLayer
 		};
+
 		L.control.layers(baseMaps, overlayMaps,
 		{
-			//collapsed: false
+			collapsed: false
 		}).addTo(mapa);
-		mostrarInfo();
 	});
+	mostrarInfo();
 }
 
-function mostrarInfo ()
-{
-	info = L.control();
-
-	info.onAdd = function (map)
-	{
-		this._div = L.DomUtil.create('div', 'info');
-		this.update();
-		return this._div;
-	};
-
-	info.update = function (props)
-	{
-		this._div.innerHTML = '<h4>&Aacute;rea departamento</h4>' +  (props ?
-			'<b>' + props.Nombre + '</b><br />' + props.Area + ' m<sup>2</sup>'
-			: 'Pase el ratón sobre un departamento');
-	};
-
-	info.addTo(mapa);
-}
-
-// Funcion que muestra informacion en un popup.
 function onEachFeature(p_feature, p_layer)
 {
 	p_layer.on(
@@ -126,7 +98,7 @@ function getColor (area)
 		'#FED976';
 }
 
-function highlightFeature(e)
+function highlightFeature (e)
 {
 	var layer = e.target;
 
@@ -143,6 +115,26 @@ function highlightFeature(e)
 
 function resetHighlight(e)
 {
-	geojsonLayer.resetStyle(e.target);
+	geoJsonLayer.resetStyle(e.target);
 	info.update();
+}
+
+function mostrarInfo ()
+{
+	info = L.control();
+
+	info.onAdd = function ()
+	{
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	}
+	
+	info.update = function (props)
+	{
+		this._div.innerHTML = '<h4>&Aacute;rea departamento</h4>' +  (props ?
+		  '<b>' + props.Nombre + '</b><br />' + props.Area + ' m<sup>2</sup>'
+		  : 'Pase el ratón sobre un departamento');
+	};
+	info.addTo(mapa);
 }
